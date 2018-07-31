@@ -21,13 +21,14 @@ public class SshStringInput{    // Shell, conexion desde server // Envio y recib
   /**
    * @wbp.parser.entryPoint
    */
-static UserInterface UI = new UserInterface();
-static PipedOutputStream pin;
-static PipedInputStream pout;
-static String myCommand, user;
-static Session session;
-static private 	int i=0;
+private static UserInterface UI = new UserInterface();
+private static PipedOutputStream pin;
+private static PipedInputStream pout;
+private static String myCommand, user;
+private static Session session;
+private static int i=0;
 private static Channel channel;
+
 
   public static void main(String[] arg){
   
@@ -80,32 +81,34 @@ private static Channel channel;
 
     //  channel.setInputStream(System.in);
      
-      PipedInputStream en = new PipedInputStream(4096);
+      PipedInputStream en = new PipedInputStream();
       pin = new PipedOutputStream((PipedInputStream) en);
       BufferedReader br = new BufferedReader(new InputStreamReader(en = (PipedInputStream) channel.getInputStream()));
       
       channel.connect(5*1000);     
       
-      
-      String received=null;
-      int index=0;
-      StringBuilder sb = new StringBuilder(4096);
+//******************************************************************************************************      
+      String received;
+      StringBuilder sb = new StringBuilder();
       while((received=br.readLine())!=null) {
     	  System.out.println(received);
-          sb.insert(index,received);
-          index++;
+          sb.append(received+"\n");
+
+          
+          if(received.contains(user+"@")) break;
+          if(received.contains("Telefonica")) break;
+
       }
       UI.setRespuesta(sb.toString());
-   
-        channel.disconnect();
-        session.disconnect();
-       System.out.println("Disconnected channel and session");
-    
     }
     catch(Exception e){
       System.out.println(e);
     }
     
+  //******************************************************************************************************     
+    channel.disconnect();
+    session.disconnect();
+    System.out.println("Disconnected channel and session");
     
   }
 

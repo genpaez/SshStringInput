@@ -61,7 +61,7 @@ public class UserInterface extends JFrame implements ActionListener{
 		enviarBtn.addActionListener(this);
 		
 		respuestaText = new JTextArea();
-		respuestaText.setBackground(Color.BLACK);
+		respuestaText.setBackground(Color.LIGHT_GRAY);
 		respuestaText.setBounds(5, 110, 379, 200);
 		getContentPane().add(respuestaText);
 		
