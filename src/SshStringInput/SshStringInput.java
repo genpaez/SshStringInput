@@ -95,17 +95,19 @@ private static Channel channel;
           sb.append(received+"\n");
 
           
-          if(received.contains(user+"@")) break;
-          if(received.contains("Telefonica")) break;
+          if(received.contains("@")) break;                 // no lo toma
+          if(received.contains("Telefonica")) break;        // fin de ciclo While
 
       }
-      UI.setRespuesta(sb.toString());
+      UI.setRespuesta(sb.toString());                       // Respuesta en UI
     }
     catch(Exception e){
       System.out.println(e);
+  	System.out.println("Falló conexión, rechazada por host remoto B"); //// OJO mensaje de error por ocupación
+	
     }
     
-  //******************************************************************************************************     
+//******************************************************************************************************
     channel.disconnect();
     session.disconnect();
     System.out.println("Disconnected channel and session");
